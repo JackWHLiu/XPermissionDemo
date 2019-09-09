@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         XPermission.with(this)
                 .runtime()
                 .permission(com.lwh.jackknife.permission.runtime.Permission.CALL_PHONE)
-                .rationale(new RuntimeRationale())
+//                .rationale(new RuntimeRationale())
                 .onGranted(new com.lwh.jackknife.permission.Action<List<String>>() {
                     @Override
                     public void onAction(List<String> permissions) {
