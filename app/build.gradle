@@ -1,0 +1,70 @@
+import com.lwh.jackknife.plugin.AspectjPlugin
+
+apply plugin: 'com.android.application'
+apply plugin: AspectjPlugin
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+    defaultConfig {
+        applicationId "com.lwh.jackknife.demo.xpermission"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true  //高版本gradle需要
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    afterEvaluate {
+        tasks.matching {
+            it.name.startsWith('dex')
+        }.each { dx ->
+            if (dx.additionalParameters == null) {
+                dx.additionalParameters = []
+            }
+            dx.additionalParameters += '--multi-dex' // enable multidex
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"    //java虚拟机堆内存最大值设为4g，避免oom
+        preDexLibraries = false //设置对第三方lib不做preDex处理
+//        additionalParameters =  //每个dex包方法数限制在4000以内
+//                ['--multi-dex',
+//                 '--set-max-idx-number=40000']
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    //use apache lib in android sdk 23
+    useLibrary 'org.apache.http.legacy'
+}
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+//    implementation project(path: ':jackknife-aop-plugin')
+//    implementation project(path: ':jackknife-xpermission')
+//    implementation 'org.aspectj:aspectjrt:1.8.10'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.0'
+    implementation 'com.github.JackWHLiu.jackknife:jackknife-xpermission:4.4.5'
+}
