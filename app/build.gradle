@@ -1,7 +1,4 @@
-import com.lwh.jackknife.plugin.AspectjPlugin
-
 apply plugin: 'com.android.application'
-apply plugin: AspectjPlugin
 
 android {
     compileSdkVersion 27
@@ -61,10 +58,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-//    implementation project(path: ':jackknife-aop-plugin')
-//    implementation project(path: ':jackknife-xpermission')
-//    implementation 'org.aspectj:aspectjrt:1.8.10'
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.0'
     implementation 'com.github.JackWHLiu.jackknife:jackknife-xpermission:4.4.5'
 }

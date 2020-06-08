@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.lwh.jackknife.permission.XPermission;
-import com.lwh.jackknife.permission.aop.RuntimeRationale;
 
 import java.util.List;
 
